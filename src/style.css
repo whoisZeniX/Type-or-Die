@@ -1,0 +1,71 @@
+:root {
+    --bg: #11110f;
+    --fg: #e9e5d9;
+    --dim: #8b867a;
+    --line: #3b3934;
+    --accent: #ff8a3d;
+    --ok: #a6d189;
+    --fail: #ef6f6c;
+    --font: 'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace; 
+}
+
+* { box-sizing: border-box; }
+h1, h2, p, ul, ol, dl dd { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font: 15px/1.6 var(--font);
+}
+
+.dim { color: var(--dim); }
+
+#app {
+    max-width: 820px;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 1.5rem 1rem 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+}
+
+.screen {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+}
+
+.pane {
+    position: relative;
+    border: 1px solid var(--line);
+    padding: 1.5rem 1.5rem 1.5rem;
+}
+
+.pane-title {
+    position: absolute;
+    top: -0.8em;
+    left: 1.5ch;
+    padding: 0 1ch;
+    background: var(--bg);
+    color: var(--dim);
+    font-size: 0.85rem;
+    font-weight: 400;
+}
+
+kbd {
+    padding: 0 0.45ch;
+    background: var(--fg);
+    color: var(--bg);
+    font: inherit;
+    font-size: 0.85em;
+}
+
+.selected {
+    background: var(--fg);
+    color: var(--bg);
+}
+.selected .dim { color: inherit; }
