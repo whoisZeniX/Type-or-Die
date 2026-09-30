@@ -73,3 +73,26 @@ export function goToMenu() {
 export function toggleHelp() {
     setState({ helpOpen: !state.helpOpen });
 }
+
+let rng = createRng();
+
+export function startGame() {
+    rng = createRng();
+    setState({
+        screen: 'playing',
+        helpOpen: false,
+        timer: createTimer(GAME_LENGTH_MS),
+        challenge: nextChallenge(1, rng),
+        choiceIndex: 0,
+        log: [],
+        score: 0,
+        streak: 0,
+        bestStreak: 0,
+        solved: 0,
+        wrong: 0,
+        skipped: 0,
+        tier: 1,
+        endReason: null,
+        isNewBest: false,
+    });
+}

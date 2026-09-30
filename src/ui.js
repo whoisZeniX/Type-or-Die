@@ -47,3 +47,33 @@ export function showMessage(text) {
     clearTimeout(messageTimeout);
     messageTimeout = setTimeout(() => { line.textContent = ''; }, 2000);
 }
+
+function timerClass(ms) {
+    if (ms <= 60 * 1000) return 'danger';
+    if (ms <= 3 * 60 * 1000) return 'warning';
+    return '';
+}
+
+function statusBar(state) {
+    const remaining = getRemaining(state.timer);
+    const tierMeter = ''.repeat(state.tier) + ''.repeat(MAX_TIER - state.tier);
+    return `
+      <header class="status-bar">
+        <span class="status-name">15mh</span>
+        <span>tier <span class="meter">${tierMeter}</span></span>
+        <span>streak ${state.streak} <span class="dim">${streakMultiplier(state.streak).toFixed(1)}</span></span>
+        <span>${state.score} pts</span>
+        <span id="timer" class="timer ${timerClass(remaining)}">${formatTime(remaining)}</span>
+      </header>`;
+}
+
+const SHORTCUTS = {
+    help: [['Esc', 'close']],
+    menu: [['↑↓', 'move'], ['Enter', 'select'], ['?', 'help']],
+    briefing: [['Enter', 'connect'], ['Esc', 'back'], ['?', 'help']],
+    text: [['Enter', 'submit'], ['Tab', 'skip -20s'], ['Esc', 'pause']],
+    choice: [['1-4', 'answer'], ['↑↓', 'move'], ['Enter', 'confirm'], ['Tab', 'skip -20s'], ['Esc', 'pause']],
+    paused: [['Esc', 'resume'], ['Q', 'end run'], ['?', 'help']],
+    results: [['Enter', 'play again'], ['Esc', 'menu']],
+};
+ 
