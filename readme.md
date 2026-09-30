@@ -1,4 +1,4 @@
-# The 15-Minute Hacker
+# Type-or-Die
 
 > Can you survive 15 minutes of increasingly difficult computer challenges — using **only your keyboard**?
 
