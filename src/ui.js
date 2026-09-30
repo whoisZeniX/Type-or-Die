@@ -77,3 +77,11 @@ const SHORTCUTS = {
     results: [['Enter', 'play again'], ['Esc', 'menu']],
 };
  
+function shortcutBar(state){
+    let shortcuts = SHORTCUTS[state.screen];
+    if(state.screen === 'playing') shortcuts = SHORTCUTS[state.challenge.input];
+    if (state.screen === 'playing') shortcuts = SHORTCUTS.help;
+
+    const items = shortcuts.map(([keyLabel, action]) => `<span>${key(keyLabel)} ${action}</span>`).join('');
+    return `<footer class="shortcuts" aria-label="Keyboard shortcuts">${items}</footer>`;
+}

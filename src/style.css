@@ -69,3 +69,33 @@ kbd {
     color: var(--bg);
 }
 .selected .dim { color: inherit; }
+
+.status-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 2.5ch;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--line);
+    color: var(--dim);
+}
+
+.status-name { color: var(--fg); font-weight: 600; }
+.meter { color: var(--fg); letter-spacing: 0.1em; }
+
+.timer {
+    margin-left: auto;
+    color: var(--fg);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+.timer.warning { color: var(--accent); }
+.timer.danger { color: var(--fail); animation: blink 1s steps(1) infinite; }
+
+.shortcuts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 3ch;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--line);
+    font-size: 0.85 rem;
+}
