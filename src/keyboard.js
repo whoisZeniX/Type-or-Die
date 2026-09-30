@@ -37,3 +37,43 @@ function briefingKeys(key) {
     else return false;
     return true;
 }
+
+function playingKeys(key) {
+    if (key === 'Escape') {
+        game.pauseGame();
+        return true;
+    }
+    if (key === 'Tab') {
+        game.skipChallenge();
+        return true;
+    }
+    if (state.challenge.input === 'choice') return choiceKeys(key);
+
+    // Text challenge: Enter submits, every other key types into the answer box.
+    const answerBox = document.getElementById('answer');
+    if (key === 'Enter') {
+        game.submitAnswer(answerBox.value);
+        return true;
+    }
+    if (document.activeElement !== answerBox) answerBox.focus(); // safety net if focus was lost
+    return false;
+}
+
+function choiceKeys(key) {
+    const choices = state.challenge.choices;
+    const number = Number(key);
+    if (number >= 1 && number <= choices.length) game.submitAnswer(choices[number - 1]);
+    else if (key === 'ArrowUp' || key === 'w') game.moveChoice(-1);
+    else if (key === 'ArrowDown' || key === 's') game.moveChoice(1);
+    else if (key === 'Enter' || key === ' ') game.submitAnswer(choices[state.choiceIndex]);
+    else return false;
+    return true;
+}
+
+function pausedKeys(key) {
+    if (key === 'Escape' || key === 'Enter' || key === ' ') game.resumeGame();
+    else if (key === 'q') game.endGame('quit');
+    else if (key === '?') game.toggleHelp();
+    else return false;
+    return true;
+}
