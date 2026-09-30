@@ -8,13 +8,19 @@ subscribe(render);
 window.addEventListener('keydown', handleKey);
 
 for (const eventName of ['mousedown', 'contextmenu']) {
-    document.addEventListener(eventName, (event) => {
-        event.preventDefault();
-        showMessage('E1: mouse input is disabled, use the keyboard');
-    });
+  document.addEventListener(eventName, (event) => {
+    event.preventDefault();
+    showMessage('E1: mouse input is disabled, use the keyboard');
+  });
 }
 
 document.addEventListener('visibilitychange', () => {
-    if (document.hidden && state.screen === 'playing') pauseGame();
+  if (document.hidden && state.screen === 'playing') pauseGame();
 });
 
+setInterval(() => {
+  const remaining = tick();
+  if (remaining !== null) updateTimer(remaining);
+}, 250);
+
+render(state);
