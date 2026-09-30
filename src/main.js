@@ -13,3 +13,8 @@ for (const eventName of ['mousedown', 'contextmenu']) {
         showMessage('E1: mouse input is disabled, use the keyboard');
     });
 }
+
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden && state.screen === 'playing') pauseGame();
+});
+
