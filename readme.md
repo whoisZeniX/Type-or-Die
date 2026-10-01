@@ -77,47 +77,6 @@ tests/
 └── challenges.test.js
 ```
 
-### Data flow
-
-```
-key press → keyboard.js → game.js action → setState() → ui.js render() → screen updates
-```
-
-The UI never changes the state directly. Every change goes through a function in `game.js`, which makes bugs easy to trace.
-
-### Design
-
-The game looks like a terminal program, not a website: square panes with the title in the border, one accent color, inverted text for the current selection, a nano-style shortcut bar, a vim-style message line, `[ OK ]`/`[FAIL]` log lines like a boot log, and a help screen written like a `man` page.
-
 ### Keyboard input
 There is exactly **one** `keydown` listener (on `window`). It picks a handler based on the current screen (`menuKeys`, `playingKeys`, ...). Each handler returns `true` if it used the key, and only then is `preventDefault()` called, so typing in the answer box still works. Ctrl/Cmd/Alt shortcuts are ignored so browser shortcuts keep working, and held-down Enter is ignored so an answer can't be submitted twice.
-
-### Focus management
-Rendering replaces the page's HTML, which destroys the focused element. After every render `moveFocus()` puts focus back into the answer box. Mouse clicks are blocked (`mousedown` → `preventDefault`) and show a message, so they can't steal focus either.
-
-### Challenges
-`challenges.js` lists every type with an `id`, a `minTier` and a `generate(tier, rng)` function that returns a plain object:
-
-```js
-{ type, title, prompt, data, hint, input: 'text' | 'choice', choices?, answer, explanation }
-```
-
-Answers are compared after `normalizeAnswer()` (lowercase, trim, strip `0x`/`0b` and leading zeros), so `0x1F`, `1f` and ` 1F ` all count as correct.
-
-### Timer
-The timer stores **when** the game ends (`endsAt`), not how many seconds are left. Time left is always `endsAt - Date.now()`, so it stays accurate even when the browser slows down background tabs. Pausing stores the remaining time; resuming creates a new `endsAt`. Only the timer text is updated every 250 ms, not the whole screen, so what you're typing is never lost.
-
-### Difficulty
-`tier = min(5, 1 + floor(solved / 4))`. Each generator uses the tier to pick bigger numbers, unknown cipher shifts or harder patterns. Logic gates only unlock at tier 2.
-
-## Testing
-
-- `npm test` generates thousands of challenges with fixed seeds and checks every answer is correct, plus tests for scoring, tiers, answer normalization and timer math.
-- Manual test: a full game from menu to results without touching the mouse.
-
-## Future ideas
-
-- Regex and "spot the bug" challenge types
-- Daily seeded run so friends can compare scores on the same challenges
-- Sound effects
 
